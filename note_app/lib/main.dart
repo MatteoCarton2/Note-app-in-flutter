@@ -4,7 +4,7 @@ void main() {
   runApp(const MyApp());
 }
 
-// MonBouton doit être ici, au même niveau que MyApp
+// ex 1 :
 class MonBouton extends StatelessWidget {
   // Propriétés
   final String text; // "final" devant car les valeurs ne changeront pas après la création du bouton
@@ -36,7 +36,7 @@ class MonBouton extends StatelessWidget {
     );
   }
 }
-
+// ex 2 :
 class MonTexte extends StatelessWidget {
   // Propriétés
   final double taille;
@@ -59,6 +59,37 @@ class MonTexte extends StatelessWidget {
   }
 }
 
+// ex 3
+class CarteProfil extends StatelessWidget {
+  // Propriétés
+  final IconData icone;
+  final String nom;
+  final String titre;
+  final String description;
+
+  // Constructeur
+  const CarteProfil({super.key, required this.icone, required this.nom, required this.titre, required this.description});
+
+  // Build
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+        children: [
+          Icon(icone),
+          MonTexte(text: nom, couleur: Colors.black, taille: 16),
+          MonTexte(text: titre, couleur: Colors.red, taille: 14),
+          MonTexte(text: description, couleur: Colors.grey, taille: 10),
+        ],
+      ),
+      ),
+    );
+  }
+
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -75,9 +106,10 @@ class MyApp extends StatelessWidget {
             children: [
               MonBouton(
                 text: "Mon bouton",
-                couleur: Colors.green,
-                taille: 200,
+                couleur: Colors.blue,
+                taille: 150,
               ),
+              SizedBox(height: 20),
               MonTexte(
                 text: "Bienvenue sur ma super application !",
                 couleur: Colors.purple,
@@ -87,7 +119,14 @@ class MyApp extends StatelessWidget {
                 text: "c'est génial...",
                 couleur: Colors.black,
                 taille: 12,
-              )
+              ),
+              SizedBox(height: 20),
+              CarteProfil(
+                icone: Icons.person,
+                nom: "Mattéo Carton",
+                titre: "Développeur flutter",
+                description: "En cours d'apprentissage."
+              ),
             ],
           ),
         ),
