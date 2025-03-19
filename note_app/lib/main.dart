@@ -118,6 +118,44 @@ Widget build(BuildContext context) {
 }
 }
 
+// ex 05
+
+class MonImage extends StatelessWidget {
+  // propriétés
+  final String url;
+  final double size;
+  final Color shadowColor;
+  final double sizeBorder;
+
+  // constructeur
+  const MonImage({super.key, required this.url, required this.size, required this.shadowColor, required this.sizeBorder});
+
+  // build
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: shadowColor,
+          blurRadius: 10,
+          spreadRadius: 5,
+        ),
+      ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(sizeBorder),
+        child: Image.network(
+          url,
+          fit: BoxFit.cover,
+          ),
+      )
+    );
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -132,6 +170,13 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,  // Pour centrer verticalement
             children: [
+              MonImage(
+                url: "https://wallpapercave.com/wp/wp7707788.jpg",
+                size: 200,
+                shadowColor: Colors.black,
+                sizeBorder: 4,
+              ),
+              SizedBox(height: 32),
               CarteProfil(
                 icone: Icons.person,
                 nom: "Mattéo Carton",
