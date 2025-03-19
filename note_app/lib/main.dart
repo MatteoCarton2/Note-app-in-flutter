@@ -37,6 +37,28 @@ class MonBouton extends StatelessWidget {
   }
 }
 
+class MonTexte extends StatelessWidget {
+  // Propriétés
+  final double taille;
+  final Color couleur;
+  final String text;
+
+  // Constructeur
+  const MonTexte({super.key, required this.taille, required this.couleur, required this.text});
+
+  // Build
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: taille,
+        color: couleur,
+      )
+    );
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -48,10 +70,20 @@ class MyApp extends StatelessWidget {
           title: const Text('Mon App Flutter'),
         ),
         body: Center(
-          child: MonBouton(
-            text: "Ceci est un bouton",
-            couleur: Colors.blue,
-            taille: 200,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,  // Pour centrer verticalement
+            children: [
+              MonBouton(
+                text: "Mon bouton",
+                couleur: Colors.green,
+                taille: 200,
+              ),
+              MonTexte(
+                text: "Bienvenue sur ma super application !",
+                couleur: Colors.purple,
+                taille: 18,
+              ),
+            ],
           ),
         ),
       ),
