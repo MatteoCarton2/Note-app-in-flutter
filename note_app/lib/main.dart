@@ -83,6 +83,11 @@ class MyApp extends StatelessWidget {
                 couleur: Colors.purple,
                 taille: 18,
               ),
+              MonTexte(
+                text: "c'est génial...",
+                couleur: Colors.black,
+                taille: 12,
+              )
             ],
           ),
         ),
