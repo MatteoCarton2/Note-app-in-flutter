@@ -156,6 +156,102 @@ class MonImage extends StatelessWidget {
   }
 }
 
+// ex 06
+
+class MonFormulaire extends StatefulWidget {
+  // propriétés
+  final Function (String nom, String email) onSubmit;
+  final Color couleur;
+  final double borderSize;
+
+  // constructeur
+  const MonFormulaire({super.key, required this.onSubmit, required this.couleur, required this.borderSize});
+
+  //build
+  @override
+  State<MonFormulaire> createState() => _MonFormulaireState();
+}
+
+class _MonFormulaireState extends State<MonFormulaire> {
+  // Contrôleurs (c'est comme des "gestionnaires" qui vont suivre ce que le user tape)
+  final _nomController = TextEditingController();
+  final _emailController = TextEditingController();
+
+  // Build
+  @override
+  Widget build (BuildContext build) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+      children: [
+        TextField(
+          controller: _nomController,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+          decoration: InputDecoration(
+            labelText: "Votre nom",
+            hintText: "Entrez votre nom", // Le texte d'aide qui disparaît
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderSize)
+            ),
+            enabledBorder: OutlineInputBorder(  // Bordure quand pas sélectionné
+              borderSide: BorderSide(color: widget.couleur),
+              borderRadius: BorderRadius.circular(widget.borderSize),
+            ),
+            focusedBorder: OutlineInputBorder(  // Bordure quand sélectionné
+              borderSide: BorderSide(color: widget.couleur, width: 2),
+              borderRadius: BorderRadius.circular(widget.borderSize),
+            ), 
+          ),
+        ),
+        SizedBox(height: 16),
+         TextField(
+          controller: _emailController,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
+          decoration: InputDecoration(
+            labelText: "Votre email",
+            hintText: "Entrez votre email", // Le texte d'aide qui disparaît
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(widget.borderSize)
+            ),
+            enabledBorder: OutlineInputBorder(  // Bordure quand pas sélectionné
+              borderSide: BorderSide(color: widget.couleur),
+              borderRadius: BorderRadius.circular(widget.borderSize),
+            ),
+            focusedBorder: OutlineInputBorder(  // Bordure quand sélectionné
+              borderSide: BorderSide(color: widget.couleur, width: 2),
+              borderRadius: BorderRadius.circular(widget.borderSize),
+            ), 
+          ),
+        ),
+        SizedBox(height: 16),
+        IconButton(
+          onPressed: () {
+            widget.onSubmit(_nomController.text, _emailController.text);
+          },
+          icon: Icon(Icons.send),
+          color: Colors.red,
+          iconSize: 24,
+        ),
+      ]
+    ),
+    );
+  }
+
+  // Libérer les ressources (comme free en c)
+  @override
+  void dispose() {
+    _nomController.dispose();
+    _emailController.dispose();
+    super.dispose(); // fait référence à la classe parente (ici State)
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -170,13 +266,6 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,  // Pour centrer verticalement
             children: [
-              MonImage(
-                url: "https://wallpapercave.com/wp/wp7707788.jpg",
-                size: 200,
-                shadowColor: Colors.black,
-                sizeBorder: 4,
-              ),
-              SizedBox(height: 32),
               CarteProfil(
                 icone: Icons.person,
                 nom: "Mattéo Carton",
@@ -184,26 +273,13 @@ class MyApp extends StatelessWidget {
                 description: "En cours d'apprentissage."
               ),
               SizedBox(height: 32),
-              ListeTaches(
-                text: "Apprendre Flutter",
-                done: false,
-                onChanged: (bool? value) {
-                  print("La tâche 'Apprendre Flutter' est désormais : $value");
+              MonFormulaire(
+                onSubmit: (nom, email) {
+                  print("Nom: $nom, Email: $email");
                 },
-                onDelete: () {
-                  print("La tâche 'Apprendre Flutter' a été supprimée.");
-                },
-              ),
-               ListeTaches(
-                text: "Créer ma propre application",
-                done: false,
-                onChanged: (bool? value) {
-                  print("La tâche 'Créer ma propre application' est désormais : $value");
-                },
-                onDelete: () {
-                  print("La tâche 'Créer ma propre application' a été supprimée.");
-                },
-              ),
+                couleur: Colors.red,
+                borderSize: 16,
+              )
             ],
           ),
         ),
